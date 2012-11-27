@@ -56,5 +56,15 @@ module.exports = {
     assert.equal(request.form.field, "me@dandean.com");
 
     form.configure({ dataSources: ['body', "query", "params"] });
+  },
+
+  'form : configure : language' : function() {
+    form.configure({ language: 'kr' });
+
+    var request = { body: { field: "fail" }};
+    form(validate("field").isEmail())(request, {});
+    assert.equal(request.form.getErrors("field")[0], "field 필드는 이메일 주소여야 합니다");
+
+    form.configure({ language: 'en' });
   }
 };

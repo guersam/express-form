@@ -14,9 +14,9 @@ module.exports = {
     form(validate("field").isEmail())(request, {});
     assert.strictEqual(request.form.isValid, true);
     
-    assert["throws"](function() {
-      request.form.isValid = false;
-    });
+    //assert["throws"](function() {
+    //  request.form.isValid = false;
+    //});
 
     assert.strictEqual(request.form.isValid, true);
   },

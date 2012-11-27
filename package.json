@@ -10,16 +10,22 @@
   },
   "contributors": [ 
     "Marc Harter <wavded@gmail.com>",
-    "Sugarstack <@sugarstack>"
+    "Sugarstack <@sugarstack>",
+    "Jisoo Park <xxxyel@gmail.com>"
   ],
   "keywords" : ["form", "validator", "validation", "express"],
   "dependencies": {
-    "validator": ">= 0.1.2",
-    "object-additions": ">= 0.5.0"
+    "validator"        : ">= 0.1.2",
+    "object-additions" : ">= 0.5.0"
+  },
+  "devDependencies": {
+    "express"   : "*",
+    "mocha"     : "*",
+    "supertest" : "*"
   },
   "main" : "index",
   "bugs" : { "url" : "http://github.com/dandean/express-form/issues" },
-  "scripts": { "test": "expresso" },
+  "scripts": { "test": "./node_modules/.bin/mocha -u exports" },
   "engines": { "node": ">=0.2.2" },
   "licenses" : [{
     "type" : "MIT",

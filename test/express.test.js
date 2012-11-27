@@ -3,7 +3,8 @@ var assert = require("assert"),
     filter = form.filter,
     validate = form.validate,
     express = require("express"),
-    app = express.createServer();
+    app = express(),
+    request = require("supertest");
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -11,7 +12,7 @@ app.configure(function() {
 });
 
 module.exports = {
-  'express : middleware : valid-form': function() {
+  'express : middleware : valid-form': function (done) {
     app.post(
       '/user',
       form(
@@ -25,25 +26,21 @@ module.exports = {
         assert.strictEqual(req.form.password, "12345");
         assert.strictEqual(req.form.isValid, true);
         assert.strictEqual(req.form.errors.length, 0);
-        res.send(JSON.stringify(req.form));
+        res.json(req.form);
       }
     );    
 
-    assert.response(app,
-      {
-        url: '/user',
-        method: 'POST',
-        body: JSON.stringify({
-          username: "   dandean   \n\n\t",
-          password: " 12345 "
-        }),
-        headers: { 'Content-Type': 'application/json' }
-      },
-      { status: 200 }
-    );
+    request(app)
+      .post('/user')
+      .send({
+        username: "   dandean   \n\n\t",
+        password: " 12345 "
+      })
+      .set('Content-Type', 'application/json')
+      .expect(200, done)
   },
 
-  'express : middleware : merged-data': function() {
+  'express : middleware : merged-data': function (done) {
     app.post(
       '/user/:id',
       form(
@@ -62,23 +59,19 @@ module.exports = {
         assert.equal(req.query.stuff, "things");
         assert.equal(req.body.rad, "cool");
         
-        res.send(JSON.stringify(req.form));
+        res.json(req.form);
       }
     );    
 
-    assert.response(app,
-      {
-        url: '/user/5?stuff=things&id=overridden',
-        method: 'POST',
-        body: JSON.stringify({
-          id: "overridden by url param",
-          stuff: "overridden by query param",
-          rad: "cool"
-        }),
-        headers: { 'Content-Type': 'application/json' }
-      },
-      { status: 200 }
-    );
+    request(app)
+      .post('/user/5?stuff=things&id=overridden')
+      .send({
+        id: "overridden by url param",
+        stuff: "overridden by query param",
+        rad: "cool"
+      })
+      .set('Content-Type', 'application/json')
+      .expect(200, done)
   }
 
 

@@ -1,1 +1,2 @@
-module.exports = require("./lib/form");
+require('coffee-script');
+module.exports = require(__dirname + '/lib/form');

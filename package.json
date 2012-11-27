@@ -6,7 +6,7 @@
   "homepage": "http://dandean.github.com/express-form",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dandean/express-form.git"
+    "url": "git://github.com/guersam/express-form.git"
   },
   "contributors": [ 
     "Marc Harter <wavded@gmail.com>",
